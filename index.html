@@ -46,7 +46,7 @@ main{flex:1;padding:28px 24px;max-width:1400px;margin:0 auto;width:100%;}
 .npc:hover{border-color:var(--accent);color:var(--accent);background:rgba(232,201,126,0.04);}
 
 /* ─ Toolbar ─ */
-#vp{display:none;}
+#vp{visibility:hidden;position:absolute;pointer-events:none;opacity:0;}#vp.active{visibility:visible;position:relative;pointer-events:all;opacity:1;}
 .ph{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:20px;flex-wrap:wrap;min-height:60px;}
 .phl{display:flex;align-items:center;gap:14px;}
 .phr{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
@@ -422,7 +422,8 @@ function buildNav(snap){
   });
 }
 window.showHome=()=>{
-  el("vh").style.display=""; el("vp").style.display="none";
+  el("vh").style.display="";
+  el("vp").classList.remove("active");
   document.querySelectorAll(".ptab").forEach(t=>t.classList.remove("active")); el("tab-home").classList.add("active");
   cur=null; loadProjects();
 };
@@ -450,17 +451,23 @@ window.saveProj=async()=>{
 
 window.openProject=async(id,data)=>{
   cur={id,data};
-  el("vh").style.display="none"; el("vp").style.display="";
+  el("vh").style.display="none";
+  el("vp").classList.add("active");
   el("ptit").textContent=data.name; el("pdesc").textContent=data.desc||""; el("pej").textContent=data.emoji||"📋";
   document.querySelectorAll(".ptab").forEach(t=>t.classList.remove("active"));
   const tab=el("tab-"+id); if(tab){tab.classList.add("active");tab.scrollIntoView({behavior:"smooth",block:"nearest",inline:"center"});}
   af={catId:null,tag:null}; el("sinp").value="";
   applyVis();
   el("kb").innerHTML='<div class="ld"><div class="sp"></div> Cargando...</div>';
+  console.log("openProject:", id, data.name);
   try{
-    await fetchData(id); buildChips(); renderBoard();
+    await fetchData(id);
+    console.log("fetchData done, cats:", cats.length);
+    buildChips(); renderBoard();
+    console.log("renderBoard done");
   }catch(e){
-    el("kb").innerHTML='<div class="es">Error al cargar: '+e.message+'</div>';
+    console.error("openProject error:", e);
+    el("kb").innerHTML='<div class="es">Error: '+e.message+'</div>';
     toast("Error: "+e.message);
   }
 };
