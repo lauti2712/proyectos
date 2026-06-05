@@ -47,7 +47,7 @@ main{flex:1;padding:28px 24px;max-width:1400px;margin:0 auto;width:100%;}
 
 /* ─ Toolbar ─ */
 #vp{display:none;}
-.ph{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:20px;flex-wrap:wrap;}
+.ph{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:20px;flex-wrap:wrap;min-height:60px;}
 .phl{display:flex;align-items:center;gap:14px;}
 .phr{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
 .pe{font-size:2.2rem;}
@@ -189,7 +189,7 @@ textarea.fi{resize:vertical;min-height:68px;line-height:1.5;}
 body.theme-dark{--bg:#0c0c0e;--bg2:#141416;--bg3:#1c1c1f;--bg4:#242428;--border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.13);--accent:#e8c97e;--accent2:#d4a74a;--text:#f0ede8;--text2:#9d9a94;--text3:#5c5a56;}
 body.theme-navy{--bg:#0a0f1e;--bg2:#0f1629;--bg3:#162035;--bg4:#1e2d47;--border:rgba(100,160,255,0.1);--border2:rgba(100,160,255,0.2);--accent:#7ab0ff;--accent2:#5490e8;--text:#e8eef8;--text2:#8a9ab8;--text3:#445070;}
 body.theme-forest{--bg:#0a100c;--bg2:#111810;--bg3:#182018;--bg4:#1f2a1f;--border:rgba(100,200,100,0.08);--border2:rgba(100,200,100,0.16);--accent:#7ec97a;--accent2:#5aaa56;--text:#e4f0e2;--text2:#8aaa88;--text3:#486048;}
-body.theme-paper{--bg:#f5f2ec;--bg2:#ffffff;--bg3:#f0ece4;--bg4:#e6e0d8;--border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.14);--accent:#c47a3a;--accent2:#a05c1c;--text:#1a1510;--text2:#6a5c48;--text3:#a8987c;}
+body.theme-paper{--bg:#f5f2ec;--bg2:#ffffff;--bg3:#f0ece4;--bg4:#e6e0d8;--border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.14);--accent:#c47a3a;--accent2:#a05c1c;--text:#1a1510;--text2:#6a5c48;--text3:#a8987c;} body.theme-paper header{background:rgba(245,242,236,0.95);} body.theme-paper .ptab{color:var(--text2);} body.theme-paper .ptab.active{color:var(--accent);} body.theme-paper .logo{color:var(--accent);}
 body.theme-grape{--bg:#10080f;--bg2:#180e18;--bg3:#201525;--bg4:#2a1a30;--border:rgba(200,100,255,0.08);--border2:rgba(200,100,255,0.16);--accent:#c97edd;--accent2:#a85cbb;--text:#f0e8f4;--text2:#a888b8;--text3:#604870;}
 /* Theme switcher widget */
 #theme-sw{position:fixed;bottom:18px;left:18px;z-index:500;display:flex;flex-direction:column;align-items:flex-start;gap:0;}
@@ -455,16 +455,38 @@ window.openProject=async(id,data)=>{
   document.querySelectorAll(".ptab").forEach(t=>t.classList.remove("active"));
   const tab=el("tab-"+id); if(tab){tab.classList.add("active");tab.scrollIntoView({behavior:"smooth",block:"nearest",inline:"center"});}
   af={catId:null,tag:null}; el("sinp").value="";
-  applyVis(); await fetchData(id); buildChips(); renderBoard();
+  applyVis();
+  el("kb").innerHTML='<div class="ld"><div class="sp"></div> Cargando...</div>';
+  try{
+    await fetchData(id); buildChips(); renderBoard();
+  }catch(e){
+    el("kb").innerHTML='<div class="es">Error al cargar: '+e.message+'</div>';
+    toast("Error: "+e.message);
+  }
 };
 async function fetchData(pid){
   let cs,is;
   try{
-    [cs,is]=await Promise.all([getDocs(query(collection(db,"projects",pid,"categories"),orderBy("createdAt","asc"))),getDocs(query(collection(db,"projects",pid,"items"),orderBy("createdAt","asc")))]);
-  }catch(_){
-    [cs,is]=await Promise.all([getDocs(collection(db,"projects",pid,"categories")),getDocs(collection(db,"projects",pid,"items"))]);
+    [cs,is]=await Promise.all([
+      getDocs(query(collection(db,"projects",pid,"categories"),orderBy("createdAt","asc"))),
+      getDocs(query(collection(db,"projects",pid,"items"),orderBy("createdAt","asc")))
+    ]);
+  }catch(e1){
+    console.warn("orderBy failed, retrying without sort:", e1.message);
+    try{
+      [cs,is]=await Promise.all([
+        getDocs(collection(db,"projects",pid,"categories")),
+        getDocs(collection(db,"projects",pid,"items"))
+      ]);
+    }catch(e2){
+      console.error("fetchData failed:", e2);
+      throw e2;
+    }
   }
-  cats=[]; items=[]; cs.forEach(d=>cats.push({id:d.id,...d.data()})); is.forEach(d=>items.push({id:d.id,...d.data()}));
+  cats=[]; items=[];
+  cs.forEach(d=>cats.push({id:d.id,...d.data()}));
+  is.forEach(d=>items.push({id:d.id,...d.data()}));
+  console.log("Loaded", cats.length, "cats,", items.length, "items");
 }
 function filtered(){
   const q=feat.search?el("sinp").value.toLowerCase().trim():"";
@@ -498,7 +520,7 @@ function renderBoard(){view==="k"?renderKanban():renderList();}
 // ── Kanban ──
 function renderKanban(){
   const b=el("kb"); b.innerHTML="";
-  if(!cats.length){b.innerHTML='<div class="es">No hay categorías.<br>Creá una arriba.</div>';return;}
+  if(!cats.length){b.innerHTML='<div class="es" style="padding:40px">No hay categorías todavía.<br><br><button class="ba" onclick="openAddCat()" style="margin-top:8px">＋ Crear primera categoría</button></div>';return;}
   const flt=filtered();
   cats.forEach(cat=>{
     const itms=flt.filter(i=>i.catId===cat.id);
