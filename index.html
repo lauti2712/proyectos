@@ -201,6 +201,61 @@ textarea.fi{resize:vertical;min-height:52px;line-height:1.5;}
 .col-w-row input[type=range]{flex:1;accent-color:var(--gold);}
 .col-w-val{font-size:.72rem;color:var(--pt2);font-family:'DM Mono',monospace;width:38px;text-align:right;}
 
+
+/* LOG / TIMESTAMPS */
+.log-list{display:flex;flex-direction:column;gap:4px;margin-bottom:8px;max-height:200px;overflow-y:auto;}
+.log-entry{background:var(--pb3);border:1px solid var(--pborder);border-radius:6px;padding:6px 9px;display:flex;align-items:flex-start;gap:8px;}
+.log-entry:hover{border-color:var(--pborder2);}
+.log-ts{font-family:'DM Mono',monospace;font-size:.68rem;color:var(--gold);flex-shrink:0;margin-top:1px;white-space:nowrap;}
+.log-txt{font-size:.79rem;color:var(--pt);flex:1;line-height:1.35;}
+.log-del{background:none;border:none;color:var(--pt3);cursor:pointer;font-size:.63rem;flex-shrink:0;padding:0 2px;}
+.log-del:hover{color:var(--danger);}
+.log-add-box{background:var(--pb3);border:1px solid var(--pborder);border-radius:8px;padding:9px;}
+.log-add-row{display:flex;gap:5px;margin-bottom:6px;}
+.log-date-inp{background:var(--pb4);border:1px solid var(--pborder);border-radius:6px;padding:5px 7px;color:var(--pt);font-family:'DM Mono',monospace;font-size:.75rem;outline:none;width:90px;transition:border-color var(--t);}
+.log-date-inp:focus{border-color:var(--gold);}
+.log-time-inp{background:var(--pb4);border:1px solid var(--pborder);border-radius:6px;padding:5px 7px;color:var(--pt);font-family:'DM Mono',monospace;font-size:.75rem;outline:none;width:70px;transition:border-color var(--t);}
+.log-time-inp:focus{border-color:var(--gold);}
+.log-txt-inp{flex:1;background:var(--pb4);border:1px solid var(--pborder);border-radius:6px;padding:5px 8px;color:var(--pt);font-family:'Instrument Sans',sans-serif;font-size:.79rem;outline:none;transition:border-color var(--t);}
+.log-txt-inp:focus{border-color:var(--gold);}
+.log-txt-inp::placeholder{color:var(--pt3);}
+.log-add-btn{width:100%;background:var(--pb4);border:1px solid var(--pborder);border-radius:6px;padding:5px;color:var(--pt2);font-family:'Instrument Sans',sans-serif;font-size:.74rem;cursor:pointer;transition:all var(--t);}
+.log-add-btn:hover{background:var(--gold);color:#0c0c0e;border-color:var(--gold);}
+/* also show count badge on postit */
+.pi-log-badge{font-size:.62rem;color:#6a5a40;font-family:'DM Mono',monospace;margin-top:2px;}
+
+
+/* ── LAYERS PANEL ── */
+#layers-panel{position:fixed;top:48px;left:0;width:0;background:var(--pb2);overflow:hidden;transition:width .18s ease;display:flex;flex-direction:column;z-index:150;border-right:0 solid var(--pborder);}
+#layers-panel.open{width:220px;border-right:1px solid var(--pborder);}
+.lp-top{padding:11px 14px;border-bottom:1px solid var(--pborder);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.lp-title{font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--pt3);}
+.lp-add{background:var(--gold);color:#0c0c0e;border:none;border-radius:5px;padding:3px 8px;font-size:.72rem;font-family:'Instrument Sans',sans-serif;font-weight:600;cursor:pointer;}
+.lp-add:hover{background:var(--gold2);}
+.lp-list{flex:1;overflow-y:auto;padding:8px;}
+.layer-row{background:var(--pb3);border:1px solid var(--pborder);border-radius:8px;padding:8px 10px;margin-bottom:5px;cursor:pointer;transition:all var(--t);user-select:none;}
+.layer-row.active-layer{border-color:var(--gold);background:rgba(232,201,126,.08);}
+.layer-row-top{display:flex;align-items:center;gap:7px;margin-bottom:4px;}
+.layer-vis{font-size:.8rem;cursor:pointer;opacity:.9;}
+.layer-vis.hidden{opacity:.35;}
+.layer-lock{font-size:.78rem;cursor:pointer;color:var(--pt3);}
+.layer-lock.locked{color:var(--gold);}
+.layer-name-wrap{flex:1;min-width:0;}
+.layer-name{font-size:.8rem;font-weight:500;color:var(--pt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.layer-name-input{background:var(--pb4);border:1px solid var(--gold);border-radius:4px;padding:2px 6px;color:var(--pt);font-family:'Instrument Sans',sans-serif;font-size:.78rem;outline:none;width:100%;}
+.layer-count{font-size:.67rem;color:var(--pt3);font-family:'DM Mono',monospace;}
+.layer-del{background:none;border:none;color:var(--pt3);cursor:pointer;font-size:.65rem;padding:0 2px;}
+.layer-del:hover{color:var(--danger);}
+.layer-row-btns{display:flex;gap:3px;}
+.layer-move-btn{background:var(--pb4);border:1px solid var(--pborder);border-radius:4px;color:var(--pt3);cursor:pointer;padding:2px 5px;font-size:.62rem;transition:all var(--t);}
+.layer-move-btn:hover{color:var(--pt);}
+.layer-locked-badge{font-size:.62rem;color:var(--gold);margin-top:2px;display:flex;align-items:center;gap:3px;}
+/* canvas shift when layers panel open */
+#cw{transition:margin-left .18s ease;}
+#cw.lp-open{margin-left:220px;}
+/* lock indicator on postit */
+.pi-locked-badge{position:absolute;bottom:4px;left:5px;font-size:.58rem;color:rgba(0,0,0,0.35);}
+
 .toast{position:fixed;bottom:16px;right:16px;background:var(--pb2);border:1px solid var(--pborder2);border-radius:8px;padding:9px 13px;font-size:.78rem;color:var(--pt);z-index:700;box-shadow:0 8px 28px rgba(0,0,0,.5);animation:fiu .15s ease;}
 @keyframes fiu{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
 ::-webkit-scrollbar{width:5px;height:5px;}::-webkit-scrollbar-thumb{background:#333;border-radius:3px;}
@@ -221,6 +276,14 @@ textarea.fi{resize:vertical;min-height:52px;line-height:1.5;}
 
 <!-- APP -->
 <div id="app" style="display:none">
+  <!-- LAYERS PANEL -->
+  <div id="layers-panel">
+    <div class="lp-top">
+      <span class="lp-title">Capas</span>
+      <button class="lp-add" onclick="addLayer()">＋</button>
+    </div>
+    <div class="lp-list" id="lp-list"></div>
+  </div>
   <div class="toolbar">
     <div class="logo">Proyectos ✦</div>
     <div class="sep"></div>
@@ -231,6 +294,7 @@ textarea.fi{resize:vertical;min-height:52px;line-height:1.5;}
       <button class="tb" onclick="toggleVis()">👁 Mostrar/ocultar</button>
       <div class="vis-dd" id="vis-dd"></div>
     </div>
+    <button class="tb" id="layers-btn" onclick="toggleLayersPanel()">⧉ Capas</button>
     <button class="tb" onclick="resetView()">⊙ Centrar</button>
     <div class="zoom-info" id="zoom-info">100%</div>
     <div class="tb-right"><button class="tb" onclick="logout()">Salir</button></div>
@@ -258,6 +322,16 @@ textarea.fi{resize:vertical;min-height:52px;line-height:1.5;}
         <input class="child-inp" id="child-inp" placeholder="Texto...">
         <button class="child-add-btn" onclick="addChild()">＋ Agregar</button>
       </div>
+      <div class="dp-sec" style="margin-top:14px">📋 Registro de actividad</div>
+      <div class="log-list" id="log-list"></div>
+      <div class="log-add-box">
+        <div class="log-add-row">
+          <input class="log-date-inp" id="log-date" placeholder="dd/mm">
+          <input class="log-time-inp" id="log-time" placeholder="hh:mm">
+          <input class="log-txt-inp" id="log-txt" placeholder="Comentario...">
+        </div>
+        <button class="log-add-btn" onclick="addLog()">＋ Agregar entrada</button>
+      </div>
       <div class="dp-sec" style="margin-top:14px">Detalles</div>
       <div class="dp-meta">
         <div class="dp-mr"><span class="dp-ml">Proyecto</span><select class="fi-sm" id="dp-proj"></select></div>
@@ -265,6 +339,7 @@ textarea.fi{resize:vertical;min-height:52px;line-height:1.5;}
         <div class="dp-mr"><span class="dp-ml">Límite</span><input class="fi-sm" type="date" id="dp-end"></div>
         <div class="dp-mr"><span class="dp-ml">Etiqueta</span><input class="fi-sm" id="dp-tag" placeholder="ej. urgente..."></div>
         <div class="dp-mr"><span class="dp-ml">Color</span><div class="cp-sm" id="dp-cp"></div></div>
+        <div class="dp-mr"><span class="dp-ml">Capa</span><select class="fi-sm" id="dp-layer"></select></div>
         <div class="dp-mr"><span class="dp-ml">Tamaño</span>
           <div class="sz-btns">
             <button class="sz-btn on" id="dp-sz-n" onclick="setDetSz('normal')">Normal</button>
@@ -393,6 +468,7 @@ async function loadAll(){
       if(sS)sS.forEach(d=>stickies.push({id:d.id,projId:p.id,...d.data()}));
     }));
     const h=localStorage.getItem("hp4");if(h)hiddenProjs=new Set(JSON.parse(h));
+    await loadLayers();
     renderCanvas();buildVisDD();
   }catch(e){toast("Error: "+e.message);}
 }
@@ -507,7 +583,12 @@ function clampToLane(item,laneX,colW,cols){
 function mkItemEl(item,laneX,colW,cols){
   const pos=clampToLane(item,laneX,colW,cols);
   const el=mk("div","pi c-"+(item.color||"yellow")+" sz-"+(item.size||"normal")+(detId===item.id&&!detIsSticky?" active-det":""));
-  el.style.cssText=`left:${pos.x}px;top:${pos.y}px;width:${pos.w}px;z-index:${item.z||1};background:${colBg(item.color||"yellow")};`;
+  const itemLayer=layers.find(l=>l.id===item.layerId);
+  const layerVisible=!itemLayer||itemLayer.visible;
+  const layerLocked=itemLayer&&itemLayer.locked;
+  const computedZ=getLayerZ(item.layerId,item.z);
+  el.style.cssText=`left:${pos.x}px;top:${pos.y}px;width:${pos.w}px;z-index:${computedZ};background:${colBg(item.color||"yellow")};${!layerVisible?"opacity:0;pointer-events:none;":""}`;
+  if(layerLocked) el.dataset.locked="1"; else delete el.dataset.locked;
   const di=getDateRange(item.startDate,item.endDate);
   const children=item.children||[];
   const notes=children.filter(c=>c.type==="note");
@@ -519,10 +600,11 @@ function mkItemEl(item,laneX,colW,cols){
   if(subs.length){html+='<div class="pi-children">';subs.slice(0,3).forEach((s,idx)=>{const ci=children.indexOf(s);html+=`<div class="pi-chip"><div class="pi-chk${s.done?" done":""}" data-iid="${item.id}" data-ci="${ci}">${s.done?"✓":""}</div><span>${esc((s.text||"").substring(0,16))}</span></div>`;});if(children.length>5)html+=`<div class="pi-chip">+${children.length-5}</div>`;html+='</div>';}
   if(di.label)html+=`<div class="pi-dates ${di.cls}">${di.label}</div>`;
   if(di.progress!==null)html+=`<div class="pi-prog"><div class="pi-prog-fill" style="width:${di.progress}%"></div></div>`;
-  if(item.tag)html+=`<div class="pi-footer"><span></span><span class="pi-tag">${esc(item.tag)}</span></div>`;
+  if(item.tag||( item.logs&&item.logs.length))html+=`<div class="pi-footer"><span>${item.logs&&item.logs.length?`<span class="pi-log-badge">📋 ${item.logs.length}</span>`:""}</span>${item.tag?`<span class="pi-tag">${esc(item.tag)}</span>`:""}</div>`;
   html+='</div>';
   el.innerHTML=html;
   el.querySelectorAll(".pi-chk").forEach(chk=>{chk.addEventListener("mousedown",e=>e.stopPropagation());chk.addEventListener("click",e=>{e.stopPropagation();toggleChildEl(chk.dataset.iid,parseInt(chk.dataset.ci));});});
+  if(layerLocked) el.innerHTML+='<div class="pi-locked-badge">🔒</div>';
   el.addEventListener("mousedown",e=>startDrag(e,el,item,"item",laneX,colW,cols));
   el.addEventListener("click",e=>{if(!el._dragged)openDetail(item.id,false);});
   return el;
@@ -531,7 +613,12 @@ function mkItemEl(item,laneX,colW,cols){
 function mkStickyEl(s,laneX,colW,cols){
   const pos=clampToLane(s,laneX,colW,cols);
   const el=mk("div","pi sticky-t c-"+(s.color||"pink")+(detId===s.id&&detIsSticky?" active-det":""));
-  el.style.cssText=`left:${pos.x}px;top:${pos.y}px;width:${pos.w}px;z-index:${s.z||1};background:${colBg(s.color||"pink")};max-width:${pos.w}px;`;
+  const sLayer=layers.find(l=>l.id===s.layerId);
+  const sLayerVisible=!sLayer||sLayer.visible;
+  const sLayerLocked=sLayer&&sLayer.locked;
+  const sComputedZ=getLayerZ(s.layerId,s.z);
+  el.style.cssText=`left:${pos.x}px;top:${pos.y}px;width:${pos.w}px;z-index:${sComputedZ};background:${colBg(s.color||"pink")};max-width:${pos.w}px;${!sLayerVisible?"opacity:0;pointer-events:none;":""}`;
+  if(sLayerLocked) el.dataset.locked="1"; else delete el.dataset.locked;
   el.innerHTML=`<div class="pi-handle"><button class="pi-edit-btn" onclick="event.stopPropagation();openEditSticky('${s.id}')">✏️</button></div><div class="pi-inner"><div class="pi-title">📌 ${esc((s.text||"").substring(0,70))}</div></div>`;
   el.addEventListener("mousedown",e=>startDrag(e,el,s,"sticky",laneX,colW,cols));
   el.addEventListener("click",e=>{if(!el._dragged)openEditSticky(s.id);});
@@ -541,8 +628,11 @@ function mkStickyEl(s,laneX,colW,cols){
 // ── Drag ──
 function startDrag(e,el,data,type,laneX,colW,cols){
   if(e.target.classList.contains("pi-edit-btn")||e.target.classList.contains("pi-chk"))return;
+  if(el.dataset.locked==="1"){ toast("Capa bloqueada 🔒 — no se puede mover"); return; }
   e.stopPropagation();e.preventDefault();
-  zCounter++;el.style.zIndex=zCounter;data.z=zCounter;
+  // don't change z if layer is locked
+  const elLayer=layers.find(l=>l.id===data.layerId);
+  if(!elLayer||!elLayer.locked){ zCounter++;data.z=zCounter; el.style.zIndex=getLayerZ(data.layerId,data.z); }
   dragItem={el,data,type,startMouseX:e.clientX,startMouseY:e.clientY,startLX:data.lx||0,startLY:data.ly||LANE_TOP,moved:false};
   el._dragged=false;
 }
@@ -638,7 +728,7 @@ window.openDetail=(id,isSticky)=>{
     g("dp-notes").value=item.notes||"";g("dp-start").value=item.startDate||"";
     g("dp-end").value=item.endDate||"";g("dp-tag").value=item.tag||"";
     sDetColor=item.detColor||DET_COLORS[0];sDetSize=item.size||"normal";
-    buildDetCP();updateDetSzBtns();renderChildList(item);popSel("dp-proj",item.projId);
+    buildDetCP();updateDetSzBtns();renderChildList(item);renderLogList(item);prefillLogDT();popSel("dp-proj",item.projId);populateLayerSelect("dp-layer",item.layerId||activeLayerId);
   }
   g("dpanel").classList.add("open");renderCanvas();
 };
@@ -745,8 +835,8 @@ window.saveItem=async()=>{
     }else{
       const pos=randPos(projId);
       zCounter++;
-      const r=await addDoc(collection(db,"projects",projId,"items"),{...data,...pos,z:zCounter,notes:"",children:[],projId,createdAt:serverTimestamp()});
-      items.push({id:r.id,...data,...pos,z:zCounter,notes:"",children:[],projId});toast("Tema creado ✓");
+      const r=await addDoc(collection(db,"projects",projId,"items"),{...data,...pos,z:zCounter,notes:"",children:[],projId,layerId:activeLayerId,createdAt:serverTimestamp()});
+      items.push({id:r.id,...data,...pos,z:zCounter,notes:"",children:[],projId,layerId:activeLayerId});toast("Tema creado ✓");
     }
     closeM("m-item");renderCanvas();
   }catch(e){toast("Error: "+e.message);}
@@ -766,7 +856,7 @@ window.saveSticky=async()=>{
   const projId=g("ms-proj").value;
   try{
     if(eSid){await updateDoc(doc(db,"projects",projId,"stickies",eSid),{text,color:sStickyColor});const s=stickies.find(s=>s.id===eSid);if(s){s.text=text;s.color=sStickyColor;}toast("Actualizado ✓");}
-    else{zCounter++;const pos=randPos(projId);const r=await addDoc(collection(db,"projects",projId,"stickies"),{text,color:sStickyColor,...pos,z:zCounter,projId,createdAt:serverTimestamp()});stickies.push({id:r.id,text,color:sStickyColor,...pos,z:zCounter,projId});toast("Post-it creado ✓");}
+    else{zCounter++;const pos=randPos(projId);const r=await addDoc(collection(db,"projects",projId,"stickies"),{text,color:sStickyColor,...pos,z:zCounter,projId,layerId:activeLayerId,createdAt:serverTimestamp()});stickies.push({id:r.id,text,color:sStickyColor,...pos,z:zCounter,projId,layerId:activeLayerId});toast("Post-it creado ✓");}
     closeM("m-sticky");renderCanvas();
   }catch(e){toast("Error: "+e.message);}
 };
@@ -792,6 +882,196 @@ function getDateRange(start,end){
   else if(start){const s=new Date(start+"T00:00:00"),el=Math.ceil((now-s)/86400000);label="Inicio: "+fmt(s)+(el>0?" ("+el+"d)":"");}
   return{label,cls,progress};
 }
+
+
+
+// ── Layers ──
+let layers = []; // [{id, name, visible, locked, order}]
+let activeLayerId = null;
+let layersPanelOpen = false;
+
+function defaultLayers(){
+  return [
+    {id:"layer-bg", name:"Fondo", visible:true, locked:false, order:0},
+    {id:"layer-main", name:"Principal", visible:true, locked:false, order:1},
+    {id:"layer-top", name:"Encima", visible:true, locked:false, order:2},
+  ];
+}
+
+async function loadLayers(){
+  const saved = localStorage.getItem("layers_v1");
+  if(saved){ try{ layers=JSON.parse(saved); }catch(_){ layers=defaultLayers(); } }
+  else { layers=defaultLayers(); }
+  if(!layers.length) layers=defaultLayers();
+  activeLayerId=layers[layers.length-1].id;
+  saveLayers();
+}
+
+function saveLayers(){
+  localStorage.setItem("layers_v1", JSON.stringify(layers));
+}
+
+function getLayerZ(layerId, itemZ){
+  const idx=layers.findIndex(l=>l.id===layerId);
+  const base=(idx>=0?idx:1)*10000;
+  return base+(itemZ||1);
+}
+
+function toggleLayersPanel(){
+  layersPanelOpen=!layersPanelOpen;
+  document.getElementById("layers-panel").classList.toggle("open",layersPanelOpen);
+  document.getElementById("cw").classList.toggle("lp-open",layersPanelOpen);
+  document.getElementById("layers-btn").classList.toggle("gold",layersPanelOpen);
+  renderLayersPanel();
+}
+
+function renderLayersPanel(){
+  const list=g("lp-list"); list.innerHTML="";
+  const sorted=[...layers].sort((a,b)=>b.order-a.order); // top layer first
+  sorted.forEach(layer=>{
+    const count=items.filter(i=>i.layerId===layer.id).length + stickies.filter(s=>s.layerId===layer.id).length;
+    const row=mk("div","layer-row"+(layer.id===activeLayerId?" active-layer":""));
+    row.innerHTML=
+      `<div class="layer-row-top">
+        <span class="layer-vis${layer.visible?"":" hidden"}" onclick="toggleLayerVis('${layer.id}')" title="Visibilidad">${layer.visible?"👁":"🚫"}</span>
+        <span class="layer-lock${layer.locked?" locked":""}" onclick="toggleLayerLock('${layer.id}')" title="${layer.locked?"Bloqueada — click para desbloquear":"Desbloqueada — click para bloquear"}">${layer.locked?"🔒":"🔓"}</span>
+        <div class="layer-name-wrap" ondblclick="startRenameLayer('${layer.id}',this)">
+          <div class="layer-name" id="lname-${layer.id}">${esc(layer.name)}</div>
+        </div>
+        <button class="layer-del" onclick="deleteLayer('${layer.id}')" title="Eliminar capa">✕</button>
+      </div>
+      ${layer.locked?'<div class="layer-locked-badge">🔒 Bloqueada</div>':''}
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:3px;">
+        <span class="layer-count">${count} elemento${count!==1?"s":""}</span>
+        <div class="layer-row-btns">
+          <button class="layer-move-btn" onclick="moveLayer('${layer.id}',-1)" title="Bajar">↓</button>
+          <button class="layer-move-btn" onclick="moveLayer('${layer.id}',1)" title="Subir">↑</button>
+        </div>
+      </div>`;
+    row.addEventListener("click", e=>{
+      if(e.target.classList.contains("layer-vis")||e.target.classList.contains("layer-lock")||e.target.classList.contains("layer-del")||e.target.classList.contains("layer-move-btn"))return;
+      activeLayerId=layer.id; renderLayersPanel();
+    });
+    list.appendChild(row);
+  });
+}
+
+function startRenameLayer(id, wrap){
+  const nameEl=wrap.querySelector(".layer-name");
+  const inp=mk("input","layer-name-input");
+  inp.value=nameEl.textContent;
+  wrap.innerHTML=""; wrap.appendChild(inp);
+  inp.focus(); inp.select();
+  const finish=()=>{
+    const layer=layers.find(l=>l.id===id);
+    if(layer&&inp.value.trim()) layer.name=inp.value.trim();
+    saveLayers(); renderLayersPanel();
+  };
+  inp.addEventListener("blur",finish);
+  inp.addEventListener("keydown",e=>{if(e.key==="Enter")inp.blur();if(e.key==="Escape"){renderLayersPanel();}});
+}
+
+function addLayer(){
+  const id="layer-"+Date.now();
+  const maxOrder=layers.reduce((m,l)=>Math.max(m,l.order),0);
+  layers.push({id,name:"Nueva capa",visible:true,locked:false,order:maxOrder+1});
+  activeLayerId=id; saveLayers(); renderLayersPanel(); renderCanvas();
+}
+
+function deleteLayer(id){
+  if(layers.length<=1)return toast("Debe haber al menos una capa");
+  const hasItems=items.some(i=>i.layerId===id)||stickies.some(s=>s.layerId===id);
+  if(hasItems&&!confirm("Esta capa tiene elementos. ¿Eliminar igual? Los elementos pasarán a la capa principal."))return;
+  // move items to first remaining layer
+  const fallback=layers.find(l=>l.id!==id);
+  if(fallback){
+    items.filter(i=>i.layerId===id).forEach(i=>i.layerId=fallback.id);
+    stickies.filter(s=>s.layerId===id).forEach(s=>s.layerId=fallback.id);
+  }
+  layers=layers.filter(l=>l.id!==id);
+  if(activeLayerId===id) activeLayerId=layers[layers.length-1]?.id;
+  saveLayers(); renderLayersPanel(); renderCanvas();
+}
+
+function toggleLayerVis(id){
+  const l=layers.find(l=>l.id===id); if(!l)return;
+  l.visible=!l.visible; saveLayers(); renderLayersPanel(); renderCanvas();
+}
+
+function toggleLayerLock(id){
+  const l=layers.find(l=>l.id===id); if(!l)return;
+  l.locked=!l.locked; saveLayers(); renderLayersPanel();
+  toast(l.locked?"Capa bloqueada 🔒":"Capa desbloqueada 🔓");
+}
+
+function moveLayer(id, dir){
+  const idx=layers.findIndex(l=>l.id===id); if(idx<0)return;
+  const target=layers.find(l=>l.order===layers[idx].order+dir);
+  if(!target)return;
+  const tmp=layers[idx].order; layers[idx].order=target.order; target.order=tmp;
+  saveLayers(); renderLayersPanel(); renderCanvas();
+}
+
+function populateLayerSelect(selId, selLayerId){
+  const s=g(selId); if(!s)return; s.innerHTML="";
+  [...layers].sort((a,b)=>b.order-a.order).forEach(l=>{
+    const o=document.createElement("option");
+    o.value=l.id; o.textContent=l.name+(l.locked?" 🔒":"");
+    if(l.id===selLayerId)o.selected=true;
+    s.appendChild(o);
+  });
+}
+
+// ── Activity Log ──
+function renderLogList(item){
+  const list=g("log-list"); list.innerHTML="";
+  const logs=(item.logs||[]).slice().reverse(); // newest first
+  if(!logs.length){list.innerHTML='<div style="color:var(--pt3);font-size:.75rem;padding:2px 0">Sin registros aún.</div>';return;}
+  logs.forEach((entry,ridx)=>{
+    const idx=(item.logs.length-1)-ridx; // real index in original array
+    const row=mk("div","log-entry");
+    row.innerHTML=`<span class="log-ts">${esc(entry.ts||"")}</span><span class="log-txt">${esc(entry.txt||"")}</span><button class="log-del" onclick="deleteLog('${item.id}',${idx})">✕</button>`;
+    list.appendChild(row);
+  });
+}
+
+// prefill date/time with now
+function prefillLogDT(){
+  const now=new Date();
+  const dd=String(now.getDate()).padStart(2,"0");
+  const mm=String(now.getMonth()+1).padStart(2,"0");
+  const hh=String(now.getHours()).padStart(2,"0");
+  const mi=String(now.getMinutes()).padStart(2,"0");
+  g("log-date").value=dd+"/"+mm;
+  g("log-time").value=hh+":"+mi;
+}
+
+window.addLog=async()=>{
+  if(!detId||detIsSticky)return;
+  const date=g("log-date").value.trim();
+  const time=g("log-time").value.trim();
+  const txt=g("log-txt").value.trim();
+  if(!txt)return toast("Escribí un comentario");
+  const ts=[date,time].filter(Boolean).join(" ");
+  const item=items.find(i=>i.id===detId); if(!item)return;
+  const logs=[...(item.logs||[]),{ts,txt}];
+  try{
+    await updateDoc(doc(db,"projects",item.projId,"items",detId),{logs});
+    item.logs=logs; g("log-txt").value=""; prefillLogDT();
+    renderLogList(item); renderCanvas(); toast("Entrada agregada ✓");
+  }catch(e){toast("Error: "+e.message);}
+};
+
+window.deleteLog=async(itemId,idx)=>{
+  const item=items.find(i=>i.id===itemId); if(!item)return;
+  const logs=[...(item.logs||[])]; logs.splice(idx,1);
+  try{
+    await updateDoc(doc(db,"projects",item.projId,"items",itemId),{logs});
+    item.logs=logs; renderLogList(item); renderCanvas();
+  }catch(e){toast("Error: "+e.message);}
+};
+
+g("log-txt").addEventListener("keydown",e=>{if(e.key==="Enter")addLog();});
 
 // ── Pickers ──
 function buildEP(){const c=g("ep");c.innerHTML="";EMOJIS.forEach(e=>{const s=mk("span","eo"+(e===sEmoji?" sel":""));s.textContent=e;s.onclick=()=>{sEmoji=e;c.querySelectorAll(".eo").forEach(x=>x.classList.remove("sel"));s.classList.add("sel");};c.appendChild(s);});}
