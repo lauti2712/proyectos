@@ -917,7 +917,7 @@ function getLayerZ(layerId, itemZ){
   return base+(itemZ||1);
 }
 
-function toggleLayersPanel(){
+window.toggleLayersPanel=function(){
   layersPanelOpen=!layersPanelOpen;
   document.getElementById("layers-panel").classList.toggle("open",layersPanelOpen);
   document.getElementById("cw").classList.toggle("lp-open",layersPanelOpen);
@@ -956,7 +956,7 @@ function renderLayersPanel(){
   });
 }
 
-function startRenameLayer(id, wrap){
+window.startRenameLayer=function(id, wrap){
   const nameEl=wrap.querySelector(".layer-name");
   const inp=mk("input","layer-name-input");
   inp.value=nameEl.textContent;
@@ -971,14 +971,14 @@ function startRenameLayer(id, wrap){
   inp.addEventListener("keydown",e=>{if(e.key==="Enter")inp.blur();if(e.key==="Escape"){renderLayersPanel();}});
 }
 
-function addLayer(){
+window.addLayer=function(){
   const id="layer-"+Date.now();
   const maxOrder=layers.reduce((m,l)=>Math.max(m,l.order),0);
   layers.push({id,name:"Nueva capa",visible:true,locked:false,order:maxOrder+1});
   activeLayerId=id; saveLayers(); renderLayersPanel(); renderCanvas();
 }
 
-function deleteLayer(id){
+window.deleteLayer=function(id){
   if(layers.length<=1)return toast("Debe haber al menos una capa");
   const hasItems=items.some(i=>i.layerId===id)||stickies.some(s=>s.layerId===id);
   if(hasItems&&!confirm("Esta capa tiene elementos. ¿Eliminar igual? Los elementos pasarán a la capa principal."))return;
@@ -993,18 +993,18 @@ function deleteLayer(id){
   saveLayers(); renderLayersPanel(); renderCanvas();
 }
 
-function toggleLayerVis(id){
+window.toggleLayerVis=function(id){
   const l=layers.find(l=>l.id===id); if(!l)return;
   l.visible=!l.visible; saveLayers(); renderLayersPanel(); renderCanvas();
 }
 
-function toggleLayerLock(id){
+window.toggleLayerLock=function(id){
   const l=layers.find(l=>l.id===id); if(!l)return;
   l.locked=!l.locked; saveLayers(); renderLayersPanel();
   toast(l.locked?"Capa bloqueada 🔒":"Capa desbloqueada 🔓");
 }
 
-function moveLayer(id, dir){
+window.moveLayer=function(id, dir){
   const idx=layers.findIndex(l=>l.id===id); if(idx<0)return;
   const target=layers.find(l=>l.order===layers[idx].order+dir);
   if(!target)return;
